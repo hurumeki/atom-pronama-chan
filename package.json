@@ -1,0 +1,13 @@
+{
+  "name": "atom-pronama-chan",
+  "main": "./lib/pronama-chan",
+  "version": "0.1.0",
+  "description": "Add Pronama Chan to your editor",
+  "repository": "https://github.com/hurumeki/pronama-chan",
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "dependencies": {
+  }
+}

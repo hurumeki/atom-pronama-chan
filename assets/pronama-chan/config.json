@@ -1,0 +1,38 @@
+{
+  "images": {
+    "background": "sd_eye0.png",
+    "wink": "sd01.png",
+    "blink": "sd02.png"
+  },
+  "startVoice": {
+    "morning": "kei_voice_008.mp3",
+    "afternoon": "kei_voice_009.mp3",
+    "night": "kei_voice_010.mp3"
+  },
+  "timeSignal": [
+    "kei2_voice_081.mp3",
+    "kei2_voice_082.mp3",
+    "kei2_voice_083.mp3",
+    "kei2_voice_084.mp3",
+    "kei2_voice_085.mp3",
+    "kei2_voice_086.mp3",
+    "kei2_voice_087.mp3",
+    "kei2_voice_088.mp3",
+    "kei2_voice_089.mp3",
+    "kei2_voice_090.mp3",
+    "kei2_voice_091.mp3",
+    "kei2_voice_092.mp3",
+    "kei2_voice_093.mp3",
+    "kei2_voice_094.mp3",
+    "kei2_voice_095.mp3",
+    "kei2_voice_096.mp3",
+    "kei2_voice_097.mp3",
+    "kei2_voice_098.mp3",
+    "kei2_voice_099.mp3",
+    "kei2_voice_100.mp3",
+    "kei2_voice_101.mp3",
+    "kei2_voice_102.mp3",
+    "kei2_voice_103.mp3",
+    "kei2_voice_104.mp3"
+  ]
+}

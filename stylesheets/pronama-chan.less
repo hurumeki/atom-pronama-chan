@@ -1,0 +1,27 @@
+// The ui-variables file is provided by base themes provided by Atom.
+//
+// See https://github.com/atom/atom-dark-ui/blob/master/stylesheets/ui-variables.less
+// for a full listing of what's available.
+@import "ui-variables";
+
+.pronama-chan {
+  .item-views {
+    &>atom-text-editor {
+      .scroll-view {
+        &::after {
+          content: "";
+          background-size: contain;
+          background-position: right bottom;
+          background-repeat: no-repeat;
+          opacity: 0.3;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          right: 0;
+          position: absolute;
+          z-index: 2;
+        }
+      }
+    }
+  }
+}

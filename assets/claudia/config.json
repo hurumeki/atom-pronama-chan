@@ -1,0 +1,11 @@
+{
+  "images": {
+    "background": "SD2.png"
+  },
+  "startVoice": {
+    "morning": "27goodmorningazuresky.wav",
+    "afternoon": "01sahajimeru.wav",
+    "night": "38otsukare.wav"
+  },
+  "timeSignal": []
+}
