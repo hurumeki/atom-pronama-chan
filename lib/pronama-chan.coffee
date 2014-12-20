@@ -55,17 +55,12 @@ module.exports =
   themes: []
 
   activate: (state) ->
-    @loadConfig()
+    @loadConfig atom.config.get("atom-pronama-chan.themeDir")
     @themes = fs.readdirSync @getAssetsDirPath()
     atom.workspaceView.command "atom-pronama-chan:toggle", => @toggle()
     atom.workspaceView.command "atom-pronama-chan:roundTheme", => @roundTheme()
     atom.workspaceView.addClass("pronama-chan")
     @init()
-
-    atom.config.observe 'atom-pronama-chan.themeDir', (newValue) =>
-      @deactivate()
-      @loadConfig()
-      @init()
 
   deactivate: ->
     @audio = null
@@ -75,9 +70,9 @@ module.exports =
 
   serialize: ->
 
-  loadConfig: ->
-    if fs.existsSync (@getAssetsDirPath() + @trailingslash(atom.config.get("atom-pronama-chan.themeDir")) + "config.json")
-      data = require("../assets/" + @trailingslash(atom.config.get("atom-pronama-chan.themeDir")) + "config.json")
+  loadConfig: (themeDir)->
+    if fs.existsSync (@getAssetsDirPath() + @trailingslash(themeDir) + "config.json")
+      data = require("../assets/" + @trailingslash(themeDir) + "config.json")
       atom.config.setDefaults("atom-pronama-chan", data)
 
   init: ->
@@ -119,6 +114,9 @@ module.exports =
     if !@themes[idx]
       idx = 0
     atom.config.set("atom-pronama-chan.themeDir", @themes[idx])
+    @deactivate()
+    @loadConfig atom.config.get("atom-pronama-chan.themeDir")
+    @init()
 
   wink: ->
     atom.workspaceView.removeClass("pronama-blink")
@@ -154,7 +152,7 @@ module.exports =
     filepath = @getThemeDirPath() +  "voice/" + filename
 
     unless fs.existsSync filepath
-      console.warn "Pronama Chan: no voice file:", filepath
+      console.warn ("Pronama Chan: no voice file:" + filepath) if atom.inDevMode
       return
 
     @audio = @audio || document.createElement("audio")
