@@ -1,3 +1,6 @@
+## 0.1.3
+* Replace deprecated methods
+
 ## 0.1.2
 * Fixed bug that become Infinite loop when theme changed
 

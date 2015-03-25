@@ -57,9 +57,9 @@ module.exports =
   activate: (state) ->
     @loadConfig atom.config.get("atom-pronama-chan.themeDir")
     @themes = fs.readdirSync @getAssetsDirPath()
-    atom.workspaceView.command "atom-pronama-chan:toggle", => @toggle()
-    atom.workspaceView.command "atom-pronama-chan:roundTheme", => @roundTheme()
-    atom.workspaceView.addClass("pronama-chan")
+    atom.commands.add 'atom-text-editor', "atom-pronama-chan:toggle", => @toggle()
+    atom.commands.add 'atom-text-editor', "atom-pronama-chan:roundTheme", => @roundTheme()
+    atom.views.getView(atom.workspace).classList.add("pronama-chan")
     @init()
 
   deactivate: ->
@@ -80,20 +80,21 @@ module.exports =
 
     @element = document.createElement('style')
     @element.textContent = ""
+
     if fs.existsSync (imageDir + atom.config.get("atom-pronama-chan.images.background"))
-      @element.textContent += " .pronama-chan .item-views>atom-text-editor /deep/ .scroll-view::after {
+      @element.textContent += " .pronama-chan .item-views /deep/ .scroll-view::after {
         background-image: url(\"" + @getImagePath("background") + "\");
       }"
     if fs.existsSync (imageDir + atom.config.get("atom-pronama-chan.images.wink"))
-      @element.textContent += " .pronama-chan.pronama-wink .item-views>atom-text-editor /deep/ .scroll-view::after {
+      @element.textContent += " .pronama-chan.pronama-wink .item-views /deep/ .scroll-view::after {
         background-image: url(\"" + @getImagePath("wink") + "\");
       }"
     if fs.existsSync (imageDir + atom.config.get("atom-pronama-chan.images.blink"))
-      @element.textContent += " .pronama-chan.pronama-blink .item-views>atom-text-editor /deep/ .scroll-view::after {
+      @element.textContent += " .pronama-chan.pronama-blink .item-views /deep/ .scroll-view::after {
         background-image: url(\"" + @getImagePath("blink") + "\");
       }"
 
-    atom.workspaceView.append(@element)
+    atom.views.getView(atom.workspace).appendChild(@element)
 
     @StartVoice(new Date)
 
@@ -106,7 +107,7 @@ module.exports =
       @winkTimer = @wink()
 
   toggle: ->
-    atom.workspaceView.toggleClass("pronama-chan")
+    atom.views.getView(atom.workspace).classList.toggle("pronama-chan")
 
   roundTheme: ->
     idx = @themes.indexOf(atom.config.get("atom-pronama-chan.themeDir")) + 1
@@ -119,14 +120,14 @@ module.exports =
     @init()
 
   wink: ->
-    atom.workspaceView.removeClass("pronama-blink")
-    atom.workspaceView.removeClass("pronama-wink")
+    atom.views.getView(atom.workspace).classList.remove("pronama-blink")
+    atom.views.getView(atom.workspace).classList.remove("pronama-wink")
     setTimeout =>
         d = new Date
         if d.getSeconds() % 10 is 0
-          atom.workspaceView.addClass("pronama-wink")
+          atom.views.getView(atom.workspace).classList.add("pronama-wink")
         else
-         atom.workspaceView.addClass("pronama-blink")
+          atom.views.getView(atom.workspace).classList.add("pronama-blink")
         @winkTimer = setTimeout =>
           @wink()
         , Math.floor(Math.random() * 300) + 200
@@ -147,7 +148,7 @@ module.exports =
       @speak atom.config.get("atom-pronama-chan.timeSignal")[d.getHours()]
 
   speak: (filename) ->
-    return  unless atom.workspaceView.hasClass("pronama-chan")
+    return  unless atom.views.getView(atom.workspace).classList.contains("pronama-chan")
 
     filepath = @getThemeDirPath() +  "voice/" + filename
 

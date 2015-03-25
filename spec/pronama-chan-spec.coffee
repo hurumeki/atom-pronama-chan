@@ -1,4 +1,3 @@
-{WorkspaceView} = require 'atom'
 PronamaChan = require '../lib/pronama-chan'
 
 # Use the command `window:run-package-specs` (cmd-alt-ctrl-p) to run specs.
@@ -7,9 +6,13 @@ PronamaChan = require '../lib/pronama-chan'
 # or `fdescribe`). Remove the `f` to unfocus the block.
 
 describe "PronamaChan", ->
+  workspaceView = null
+  textEdiorView = null
   activationPromise = null
+
   beforeEach ->
-    atom.workspaceView = new WorkspaceView
+    atom.workspace.open("README.md")
+    workspaceView = atom.views.getView(atom.workspace)
     activationPromise = atom.packages.activatePackage('atom-pronama-chan')
 
     waitsForPromise ->
@@ -17,22 +20,17 @@ describe "PronamaChan", ->
 
   describe "when the atom-pronama-chan activated", ->
     it "add pronama-chan class to workspace", ->
-      expect(atom.workspaceView.hasClass('pronama-chan')).toEqual(true)
+      expect(workspaceView.classList.contains('pronama-chan')).toEqual(true)
       expect(PronamaChan.audio.src).not.toBeUndefined()
 
   describe "when the atom-pronama-chan:toggle event is triggered", ->
+    beforeEach ->
+      textEdiorView = atom.views.getView(atom.workspace.getTextEditors()[0])
+
     it "toggle pronama-chan class to workspace", ->
-      atom.workspaceView.trigger 'atom-pronama-chan:toggle'
-
       runs ->
-        expect(atom.workspaceView.hasClass('pronama-chan')).toEqual(false)
-
-    it "toggle twice pronama-chan class to workspace", ->
-      atom.workspaceView.trigger 'atom-pronama-chan:toggle'
-      atom.workspaceView.trigger 'atom-pronama-chan:toggle'
-
-      runs ->
-        expect(atom.workspaceView.hasClass('pronama-chan')).toEqual(true)
+        atom.commands.dispatch textEdiorView, 'atom-pronama-chan:toggle'
+        expect(workspaceView.classList.contains('pronama-chan')).toEqual(false)
 
   describe "Pronamachan methods", ->
     orgSrc = null
