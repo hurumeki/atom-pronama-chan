@@ -82,15 +82,15 @@ module.exports =
     @element.textContent = ""
 
     if fs.existsSync (imageDir + atom.config.get("atom-pronama-chan.images.background"))
-      @element.textContent += " .pronama-chan .item-views /deep/ .scroll-view::after {
+      @element.textContent += " .pronama-chan .item-views /deep/ .editor--private:not(.mini) .scroll-view::after {
         background-image: url(\"" + @getImagePath("background") + "\");
       }"
     if fs.existsSync (imageDir + atom.config.get("atom-pronama-chan.images.wink"))
-      @element.textContent += " .pronama-chan.pronama-wink .item-views /deep/ .scroll-view::after {
+      @element.textContent += " .pronama-chan.pronama-wink .item-views /deep/ .editor--private:not(.mini) .scroll-view::after {
         background-image: url(\"" + @getImagePath("wink") + "\");
       }"
     if fs.existsSync (imageDir + atom.config.get("atom-pronama-chan.images.blink"))
-      @element.textContent += " .pronama-chan.pronama-blink .item-views /deep/ .scroll-view::after {
+      @element.textContent += " .pronama-chan.pronama-blink .item-views /deep/ .editor--private:not(.mini) .scroll-view::after {
         background-image: url(\"" + @getImagePath("blink") + "\");
       }"
 
