@@ -55,6 +55,13 @@ module.exports =
       maximum: 1.0
       description: "voice volume. between 0.0 and 1.0"
       order: 6
+    imageOpacity:
+      type: "number"
+      default: 0.3
+      minimum: 0.0
+      maximum: 1.0
+      description: "image opacity. between 0.0 and 1.0"
+      order: 7
 
   timer: null
   winkTimer: null
@@ -86,7 +93,9 @@ module.exports =
     imageDir = @getThemeDirPath() + "image/"
 
     @element = document.createElement('style')
-    @element.textContent = ""
+    @element.textContent = " .pronama-chan .item-views /deep/ .editor--private:not(.mini) .scroll-view::after {
+      opacity: " + atom.config.get("atom-pronama-chan.imageOpacity").toString() + ";
+    }"
 
     if fs.existsSync (imageDir + atom.config.get("atom-pronama-chan.images.background"))
       @element.textContent += " .pronama-chan .item-views /deep/ .editor--private:not(.mini) .scroll-view::after {
