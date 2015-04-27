@@ -62,6 +62,11 @@ module.exports =
       maximum: 1.0
       description: "image opacity. between 0.0 and 1.0"
       order: 7
+    imageSize:
+      type: "string"
+      default: "contain"
+      description: "image size. background-size property value ('contain', px, %)"
+      order: 8
 
   timer: null
   winkTimer: null
@@ -95,6 +100,7 @@ module.exports =
     @element = document.createElement('style')
     @element.textContent = " .pronama-chan .item-views /deep/ .editor--private:not(.mini) .scroll-view::after {
       opacity: " + atom.config.get("atom-pronama-chan.imageOpacity").toString() + ";
+      background-size: " + atom.config.get("atom-pronama-chan.imageSize") + ";
     }"
 
     if fs.existsSync (imageDir + atom.config.get("atom-pronama-chan.images.background"))
