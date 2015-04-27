@@ -48,6 +48,13 @@ module.exports =
         type: "string"
       description: "Time signal voice filename. Array [0 - 23]"
       order: 5
+    voiceVolume:
+      type: "number"
+      default: 0.3
+      minimum: 0.0
+      maximum: 1.0
+      description: "voice volume. between 0.0 and 1.0"
+      order: 6
 
   timer: null
   winkTimer: null
@@ -158,6 +165,7 @@ module.exports =
 
     @audio = @audio || document.createElement("audio")
     @audio.autoplay = true
+    @audio.volume = atom.config.get("atom-pronama-chan.voiceVolume")
     @audio.src = filepath
 
   getImagePath: (type) ->
