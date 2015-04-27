@@ -80,7 +80,13 @@ module.exports =
     atom.commands.add 'atom-text-editor', "atom-pronama-chan:roundTheme", => @roundTheme()
     atom.views.getView(atom.workspace).classList.add("pronama-chan")
     atom.notifications.onDidAddNotification (notification) => @changeFace(notification)
+
+    atom.config.onDidChange 'atom-pronama-chan.imageOpacity', ({newValue, oldValue}) => @reload()
+    atom.config.onDidChange 'atom-pronama-chan.imageSize', ({newValue, oldValue}) => @reload()
+
     @init()
+
+    @StartVoice(new Date)
 
   deactivate: ->
     @audio = null
@@ -116,8 +122,6 @@ module.exports =
 
     atom.views.getView(atom.workspace).appendChild(@element)
 
-    @StartVoice(new Date)
-
     if atom.config.get("atom-pronama-chan.timeSignal").length > 0
       @timer = setInterval =>
         @timeSignal()
@@ -125,6 +129,11 @@ module.exports =
 
     if atom.config.get("atom-pronama-chan.images.wink") || atom.config.get("atom-pronama-chan.images.blink")
       @winkTimer = @wink()
+
+  reload: ->
+    @deactivate()
+    @loadConfig atom.config.get("atom-pronama-chan.themeDir")
+    @init()
 
   toggle: ->
     atom.views.getView(atom.workspace).classList.toggle("pronama-chan")
@@ -135,9 +144,8 @@ module.exports =
     if !@themes[idx]
       idx = 0
     atom.config.set("atom-pronama-chan.themeDir", @themes[idx])
-    @deactivate()
-    @loadConfig atom.config.get("atom-pronama-chan.themeDir")
-    @init()
+    @reload()
+    @StartVoice(new Date)
 
   wink: ->
     atom.views.getView(atom.workspace).classList.remove("pronama-blink")
