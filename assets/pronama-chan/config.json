@@ -2,7 +2,11 @@
   "images": {
     "background": "sd_eye0.png",
     "wink": "sd01.png",
-    "blink": "sd02.png"
+    "blink": "sd02.png",
+    "happy": "sd04.png",
+    "sad": "sd03.png",
+    "surprise": "sd05.png",
+    "usual": "sd_mouth0.png"
   },
   "startVoice": {
     "morning": "kei_voice_008.mp3",

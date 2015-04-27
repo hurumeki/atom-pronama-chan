@@ -79,6 +79,7 @@ module.exports =
     atom.commands.add 'atom-text-editor', "atom-pronama-chan:toggle", => @toggle()
     atom.commands.add 'atom-text-editor', "atom-pronama-chan:roundTheme", => @roundTheme()
     atom.views.getView(atom.workspace).classList.add("pronama-chan")
+    atom.notifications.onDidAddNotification (notification) => @changeFace(notification)
     @init()
 
   deactivate: ->
@@ -107,13 +108,10 @@ module.exports =
       @element.textContent += " .pronama-chan .item-views /deep/ .editor--private:not(.mini) .scroll-view::after {
         background-image: url(\"" + @getImagePath("background") + "\");
       }"
-    if fs.existsSync (imageDir + atom.config.get("atom-pronama-chan.images.wink"))
-      @element.textContent += " .pronama-chan.pronama-wink .item-views /deep/ .editor--private:not(.mini) .scroll-view::after {
-        background-image: url(\"" + @getImagePath("wink") + "\");
-      }"
-    if fs.existsSync (imageDir + atom.config.get("atom-pronama-chan.images.blink"))
-      @element.textContent += " .pronama-chan.pronama-blink .item-views /deep/ .editor--private:not(.mini) .scroll-view::after {
-        background-image: url(\"" + @getImagePath("blink") + "\");
+
+    ["wink", "blink", "happy", "sad", "surprise", "usual"].forEach (item, i) =>
+      @element.textContent += " .pronama-chan.pronama-#{item} .item-views /deep/ .editor--private:not(.mini) .scroll-view::after {
+        background-image: url(\"" + @getImagePath("#{item}") + "\");
       }"
 
     atom.views.getView(atom.workspace).appendChild(@element)
@@ -182,6 +180,26 @@ module.exports =
     @audio.autoplay = true
     @audio.volume = atom.config.get("atom-pronama-chan.voiceVolume")
     @audio.src = filepath
+
+  changeFace: (notification) ->
+    switch notification.type
+      when "info"
+        className = "pronama-usual"
+      when "success"
+        className = "pronama-happy"
+      when "warning"
+        className = "pronama-sad"
+      when "error"
+        className = "pronama-surprise"
+      when "fatal"
+        className = "pronama-surprise"
+      else
+        className = "pronama-usual"
+
+    atom.views.getView(atom.workspace).classList.add(className)
+    setTimeout =>
+      atom.views.getView(atom.workspace).classList.remove(className)
+    , 3000
 
   getImagePath: (type) ->
       themeDir = "atom://atom-pronama-chan/assets/" +
