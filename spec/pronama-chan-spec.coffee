@@ -11,12 +11,13 @@ describe "PronamaChan", ->
   activationPromise = null
 
   beforeEach ->
-    atom.workspace.open("README.md")
     workspaceView = atom.views.getView(atom.workspace)
     activationPromise = atom.packages.activatePackage('atom-pronama-chan')
 
     waitsForPromise ->
       activationPromise
+    waitsForPromise ->
+      atom.workspace.open("README.md")
 
   describe "when the atom-pronama-chan activated", ->
     it "add pronama-chan class to workspace", ->
@@ -27,70 +28,116 @@ describe "PronamaChan", ->
     beforeEach ->
       textEdiorView = atom.views.getView(atom.workspace.getTextEditors()[0])
 
-    it "toggle pronama-chan class to workspace", ->
-      runs ->
+    it "toggle off pronama-chan class to workspace", ->
+      waitsFor ->
         atom.commands.dispatch textEdiorView, 'atom-pronama-chan:toggle'
+      runs ->
         expect(workspaceView.classList.contains('pronama-chan')).toEqual(false)
 
-  describe "Pronamachan methods", ->
+    it "toggle on pronama-chan class to workspace", ->
+      waitsFor ->
+        atom.commands.dispatch textEdiorView, 'atom-pronama-chan:toggle'
+      waitsFor ->
+        atom.commands.dispatch textEdiorView, 'atom-pronama-chan:toggle'
+      runs ->
+        expect(workspaceView.classList.contains('pronama-chan')).toEqual(true)
+
+  describe "PronamaChan methods", ->
     orgSrc = null
     beforeEach ->
       orgSrc = PronamaChan.audio.src
 
-    it "speak method sucess", ->
-      runs ->
-        expect(PronamaChan.audio.src).not.toBeUndefined()
-        PronamaChan.speak atom.config.get("atom-pronama-chan.startVoice.morning")
-        expect(PronamaChan.audio.src).not.toEqual(orgSrc)
+    describe "speak method", ->
+      it "speak method sucess", ->
+        runs ->
+          expect(PronamaChan.audio.src).not.toBeUndefined()
+          PronamaChan.speak atom.config.get("atom-pronama-chan.startVoice.morning")
+          expect(PronamaChan.audio.src).not.toEqual(orgSrc)
 
-    it "speak method nothing to do when pronama-chan is hidden", ->
-      runs ->
-        PronamaChan.speak atom.config.get("")
-        expect(PronamaChan.audio.src).toEqual(orgSrc)
+      it "speak method nothing to do when pronama-chan is hidden", ->
+        runs ->
+          PronamaChan.speak atom.config.get("")
+          expect(PronamaChan.audio.src).toEqual(orgSrc)
 
-    it "speak method fail file is not exists", ->
-      runs ->
-        PronamaChan.speak "test"
-        expect(PronamaChan.audio.src).toEqual(orgSrc)
+      it "speak method fail file is not exists", ->
+        runs ->
+          PronamaChan.speak "test"
+          expect(PronamaChan.audio.src).toEqual(orgSrc)
 
-    it "is morning from", ->
-      PronamaChan.StartVoice new Date("2014/01/01 6:00")
+    describe "startVoice method", ->
+      it "is morning from", ->
+        PronamaChan.startVoice new Date("2014/01/01 6:00")
 
-      runs ->
-        expect(PronamaChan.audio.src).toContain(atom.config.get("atom-pronama-chan.startVoice.morning"))
+        runs ->
+          expect(PronamaChan.audio.src).toContain(atom.config.get("atom-pronama-chan.startVoice.morning"))
 
-    it "is morning to", ->
-      PronamaChan.StartVoice new Date("2014/01/01 11:59")
+      it "is morning to", ->
+        PronamaChan.startVoice new Date("2014/01/01 11:59")
 
-      runs ->
-        expect(PronamaChan.audio.src).toContain(atom.config.get("atom-pronama-chan.startVoice.morning"))
+        runs ->
+          expect(PronamaChan.audio.src).toContain(atom.config.get("atom-pronama-chan.startVoice.morning"))
 
-    it "is afternoon from", ->
-      PronamaChan.StartVoice new Date("2014/01/01 12:00")
+      it "is afternoon from", ->
+        PronamaChan.startVoice new Date("2014/01/01 12:00")
 
-      runs ->
-        expect(PronamaChan.audio.src).toContain(atom.config.get("atom-pronama-chan.startVoice.afternoon"))
+        runs ->
+          expect(PronamaChan.audio.src).toContain(atom.config.get("atom-pronama-chan.startVoice.afternoon"))
 
-    it "is afternoon to", ->
-      PronamaChan.StartVoice new Date("2014/01/01 17:59")
+      it "is afternoon to", ->
+        PronamaChan.startVoice new Date("2014/01/01 17:59")
 
-      runs ->
-        expect(PronamaChan.audio.src).toContain(atom.config.get("atom-pronama-chan.startVoice.afternoon"))
+        runs ->
+          expect(PronamaChan.audio.src).toContain(atom.config.get("atom-pronama-chan.startVoice.afternoon"))
 
-    it "is night from", ->
-      PronamaChan.StartVoice new Date("2014/01/01 18:00")
+      it "is night from", ->
+        PronamaChan.startVoice new Date("2014/01/01 18:00")
 
-      runs ->
-        expect(PronamaChan.audio.src).toContain(atom.config.get("atom-pronama-chan.startVoice.night"))
+        runs ->
+          expect(PronamaChan.audio.src).toContain(atom.config.get("atom-pronama-chan.startVoice.night"))
 
-    it "is night to", ->
-      PronamaChan.StartVoice new Date("2014/01/02 5:59")
+      it "is night to", ->
+        PronamaChan.startVoice new Date("2014/01/02 5:59")
 
-      runs ->
-        expect(PronamaChan.audio.src).toContain(atom.config.get("atom-pronama-chan.startVoice.night"))
+        runs ->
+          expect(PronamaChan.audio.src).toContain(atom.config.get("atom-pronama-chan.startVoice.night"))
 
-    it "is night to", ->
-      PronamaChan.StartVoice new Date("2014/01/02 5:59")
+      it "is night to", ->
+        PronamaChan.startVoice new Date("2014/01/02 5:59")
 
-      runs ->
-        expect(PronamaChan.audio.src).toContain(atom.config.get("atom-pronama-chan.startVoice.night"))
+        runs ->
+          expect(PronamaChan.audio.src).toContain(atom.config.get("atom-pronama-chan.startVoice.night"))
+
+    describe "changeFace method", ->
+      beforeEach ->
+        atom.notifications.clear()
+        textEdiorView = atom.views.getView(atom.workspace.getTextEditors()[0])
+
+      it "add info notification", ->
+        waitsFor ->
+          atom.notifications.addInfo("info")
+        runs ->
+          expect(workspaceView.classList.contains('pronama-usual')).toEqual(true)
+
+      it "add success notification", ->
+        waitsFor ->
+          atom.notifications.addSuccess("success")
+        runs ->
+          expect(workspaceView.classList.contains('pronama-happy')).toEqual(true)
+
+      it "add warning notification", ->
+        waitsFor ->
+          atom.notifications.addWarning("warning")
+        runs ->
+          expect(workspaceView.classList.contains('pronama-sad')).toEqual(true)
+
+      it "add error notification", ->
+        waitsFor ->
+          atom.notifications.addError("error")
+        runs ->
+          expect(workspaceView.classList.contains('pronama-surprise')).toEqual(true)
+
+      it "add fatal error notification", ->
+        waitsFor ->
+          atom.notifications.addFatalError("fatal error")
+        runs ->
+          expect(workspaceView.classList.contains('pronama-surprise')).toEqual(true)
