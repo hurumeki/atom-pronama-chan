@@ -1,3 +1,9 @@
+## 0.1.4
+* Add notification event
+* Add image size config
+* Add image opacity config
+* Add voice volume config
+
 ## 0.1.3
 * Replace deprecated methods
 
