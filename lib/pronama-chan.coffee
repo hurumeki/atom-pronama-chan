@@ -86,7 +86,7 @@ module.exports =
 
     @init()
 
-    @StartVoice(new Date)
+    @startVoice(new Date)
 
   deactivate: ->
     @audio = null
@@ -145,7 +145,7 @@ module.exports =
       idx = 0
     atom.config.set("atom-pronama-chan.themeDir", @themes[idx])
     @reload()
-    @StartVoice(new Date)
+    @startVoice(new Date)
 
   wink: ->
     atom.views.getView(atom.workspace).classList.remove("pronama-blink")
@@ -161,7 +161,7 @@ module.exports =
         , Math.floor(Math.random() * 300) + 200
     , Math.floor(Math.random() * 600000)
 
-  StartVoice: (d)->
+  startVoice: (d)->
     return if !d.getHours
     time = "night"
     if d.getHours() >= 6 && d.getHours() < 12
