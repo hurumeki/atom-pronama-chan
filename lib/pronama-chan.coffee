@@ -1,4 +1,6 @@
 fs   = require "fs"
+remote = require('remote')
+browserWindow = remote.require('browser-window')
 
 module.exports =
   config:
@@ -176,7 +178,9 @@ module.exports =
       @speak atom.config.get("atom-pronama-chan.timeSignal")[d.getHours()]
 
   speak: (filename) ->
-    return  unless atom.views.getView(atom.workspace).classList.contains("pronama-chan")
+    windows = browserWindow.getAllWindows()
+    return unless windows[0].id == atom.getCurrentWindow().id
+    return unless atom.views.getView(atom.workspace).classList.contains("pronama-chan")
 
     filepath = @getThemeDirPath() +  "voice/" + filename
 
