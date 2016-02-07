@@ -116,17 +116,17 @@ module.exports =
 
     if fs.existsSync (imageDir + atom.config.get("atom-pronama-chan.images.background"))
       @element.textContent += " .pronama-chan .item-views /deep/ .editor--private:not(.mini) .scroll-view::after {
-        background-image: url(\"" + @getImagePath("background") + "\");
+        background-image: url(\"" + @getImageUrl("background") + "\");
       }"
 
     ["wink", "blink", "happy", "sad", "surprise", "usual"].forEach (item, i) =>
       @element.textContent += " .pronama-chan.pronama-#{item} .item-views /deep/ .editor--private:not(.mini) .scroll-view::after {
-        background-image: url(\"" + @getImagePath("#{item}") + "\");
+        background-image: url(\"" + @getImageUrl(item) + "\");
       }"
       if atom.config.get("atom-pronama-chan.images." + item) &&
          fs.existsSync (imageDir + atom.config.get("atom-pronama-chan.images." + item))
         img = document.createElement('img')
-        img.src = @getImagePath("#{item}")
+        img.src = @getImageUrl(item)
 
     atom.views.getView(atom.workspace).appendChild(@element)
 
@@ -216,10 +216,11 @@ module.exports =
       atom.views.getView(atom.workspace).classList.remove(className)
     , 3000
 
-  getImagePath: (type) ->
-      themeDir = "atom://atom-pronama-chan/assets/" +
-        @trailingslash(atom.config.get("atom-pronama-chan.themeDir")) +
-        "image/" + atom.config.get("atom-pronama-chan.images." + type)
+  getImageUrl: (type) ->
+    @getThemeDirUrl() + "image/" + atom.config.get("atom-pronama-chan.images." + type)
+
+  getThemeDirUrl: () ->
+    "atom://atom-pronama-chan/assets/" + @trailingslash(atom.config.get("atom-pronama-chan.themeDir"))
 
   getThemeDirPath: () ->
       @getAssetsDirPath() + @trailingslash(atom.config.get("atom-pronama-chan.themeDir"))
