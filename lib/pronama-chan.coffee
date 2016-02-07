@@ -1,6 +1,7 @@
 fs   = require "fs"
 remote = require('remote')
 browserWindow = remote.require('browser-window')
+{ CronJob } = require 'cron'
 
 module.exports =
   config:
@@ -93,7 +94,8 @@ module.exports =
   deactivate: ->
     @audio = null
     @element.remove()
-    clearInterval @timer
+    @timer?.stop()
+    @timer = null
     clearTimeout @winkTimer
 
   serialize: ->
@@ -125,9 +127,7 @@ module.exports =
     atom.views.getView(atom.workspace).appendChild(@element)
 
     if atom.config.get("atom-pronama-chan.timeSignal").length > 0
-      @timer = setInterval =>
-        @timeSignal()
-      , 60000
+      @timer = new CronJob '00 00 * * * *', @timeSignal.bind(@), null, true
 
     if atom.config.get("atom-pronama-chan.images.wink") || atom.config.get("atom-pronama-chan.images.blink")
       @winkTimer = @wink()
@@ -174,8 +174,7 @@ module.exports =
 
   timeSignal: ->
     d = new Date
-    if d.getMinutes() is 0
-      @speak atom.config.get("atom-pronama-chan.timeSignal")[d.getHours()]
+    @speak atom.config.get("atom-pronama-chan.timeSignal")[d.getHours()]
 
   speak: (filename) ->
     windows = browserWindow.getAllWindows()
