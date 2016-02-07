@@ -1,7 +1,7 @@
 fs   = require "fs"
-remote = require('remote')
-browserWindow = remote.require('browser-window')
-{ CronJob } = require 'cron'
+remote = require 'remote'
+browserWindow = remote.require 'browser-window'
+{CronJob} = require 'cron'
 
 module.exports =
   config:
@@ -100,7 +100,7 @@ module.exports =
 
   serialize: ->
 
-  loadConfig: (themeDir)->
+  loadConfig: (themeDir) ->
     if fs.existsSync (@getAssetsDirPath() + @trailingslash(themeDir) + "config.json")
       data = require("../assets/" + @trailingslash(themeDir) + "config.json")
       atom.config.setDefaults("atom-pronama-chan", data)
@@ -123,7 +123,7 @@ module.exports =
       @element.textContent += " .pronama-chan.pronama-#{item} .item-views /deep/ .editor--private:not(.mini) .scroll-view::after {
         background-image: url(\"" + @getImageUrl(item) + "\");
       }"
-      if atom.config.get("atom-pronama-chan.images." + item) &&
+      if atom.config.get("atom-pronama-chan.images." + item) and
          fs.existsSync (imageDir + atom.config.get("atom-pronama-chan.images." + item))
         img = document.createElement('img')
         img.src = @getImageUrl(item)
@@ -131,9 +131,10 @@ module.exports =
     atom.views.getView(atom.workspace).appendChild(@element)
 
     if atom.config.get("atom-pronama-chan.timeSignal").length > 0
-      @timer = new CronJob '00 00 * * * *', @timeSignal.bind(@), null, true
+      @timer = new CronJob '00 00 * * * *', @timeSignal.bind(this), null, true
 
-    if atom.config.get("atom-pronama-chan.images.wink") || atom.config.get("atom-pronama-chan.images.blink")
+    if atom.config.get("atom-pronama-chan.images.wink") or
+       atom.config.get("atom-pronama-chan.images.blink")
       @winkTimer = @wink()
 
   reload: ->
@@ -147,7 +148,7 @@ module.exports =
   roundTheme: ->
     idx = @themes.indexOf(atom.config.get("atom-pronama-chan.themeDir")) + 1
 
-    if !@themes[idx]
+    if not @themes[idx]
       idx = 0
     atom.config.set("atom-pronama-chan.themeDir", @themes[idx])
     @reload()
@@ -157,22 +158,22 @@ module.exports =
     atom.views.getView(atom.workspace).classList.remove("pronama-blink")
     atom.views.getView(atom.workspace).classList.remove("pronama-wink")
     setTimeout =>
-        d = new Date
-        if d.getSeconds() % 10 is 0
-          atom.views.getView(atom.workspace).classList.add("pronama-wink")
-        else
-          atom.views.getView(atom.workspace).classList.add("pronama-blink")
-        @winkTimer = setTimeout =>
-          @wink()
-        , Math.floor(Math.random() * 300) + 200
+      d = new Date
+      if d.getSeconds() % 10 is 0
+        atom.views.getView(atom.workspace).classList.add("pronama-wink")
+      else
+        atom.views.getView(atom.workspace).classList.add("pronama-blink")
+      @winkTimer = setTimeout =>
+        @wink()
+      , Math.floor(Math.random() * 300) + 200
     , Math.floor(Math.random() * 600000)
 
-  startVoice: (d)->
-    return if !d.getHours
+  startVoice: (d) ->
+    return if not d.getHours
     time = "night"
-    if d.getHours() >= 6 && d.getHours() < 12
+    if d.getHours() >= 6 and d.getHours() < 12
       time = "morning"
-    else if  d.getHours() >= 12 && d.getHours() < 18
+    else if  d.getHours() >= 12 and d.getHours() < 18
       time = "afternoon"
     @speak atom.config.get("atom-pronama-chan.startVoice." + time)
 
@@ -182,7 +183,7 @@ module.exports =
 
   speak: (filename) ->
     windows = browserWindow.getAllWindows()
-    return unless windows[0].id == atom.getCurrentWindow().id
+    return unless windows[0].id is atom.getCurrentWindow().id
     return unless atom.views.getView(atom.workspace).classList.contains("pronama-chan")
 
     filepath = @getThemeDirPath() +  "voice/" + filename
@@ -191,7 +192,7 @@ module.exports =
       console.warn ("Pronama Chan: no voice file:" + filepath) if atom.inDevMode
       return
 
-    @audio = @audio || document.createElement("audio")
+    @audio = @audio or document.createElement("audio")
     @audio.autoplay = true
     @audio.volume = atom.config.get("atom-pronama-chan.voiceVolume")
     @audio.src = filepath
@@ -212,32 +213,32 @@ module.exports =
         className = "pronama-usual"
 
     atom.views.getView(atom.workspace).classList.add(className)
-    setTimeout =>
+    setTimeout ->
       atom.views.getView(atom.workspace).classList.remove(className)
     , 3000
 
   getImageUrl: (type) ->
     @getThemeDirUrl() + "image/" + atom.config.get("atom-pronama-chan.images." + type)
 
-  getThemeDirUrl: () ->
+  getThemeDirUrl: ->
     "atom://atom-pronama-chan/assets/" + @trailingslash(atom.config.get("atom-pronama-chan.themeDir"))
 
-  getThemeDirPath: () ->
-      @getAssetsDirPath() + @trailingslash(atom.config.get("atom-pronama-chan.themeDir"))
+  getThemeDirPath: ->
+    @getAssetsDirPath() + @trailingslash(atom.config.get("atom-pronama-chan.themeDir"))
 
-  getAssetsDirPath: () ->
+  getAssetsDirPath: ->
     path =  atom.config.get("atom-pronama-chan.assetsDir")
     if path[0] is "~"
       path = @getUserHome() + path.substr(1)
 
     @trailingslash path
 
-  getUserHome: () ->
+  getUserHome: ->
     if process.platform is 'win32'
       return process.env.USERPROFILE
 
     process.env.HOME
 
   trailingslash: (path) ->
-    path = path.slice(0, -1) if path[path.length-1] == "/"
+    path = path.slice(0, -1) if path[path.length-1] is "/"
     path + "/"
