@@ -123,6 +123,10 @@ module.exports =
       @element.textContent += " .pronama-chan.pronama-#{item} .item-views /deep/ .editor--private:not(.mini) .scroll-view::after {
         background-image: url(\"" + @getImagePath("#{item}") + "\");
       }"
+      if atom.config.get("atom-pronama-chan.images." + item) &&
+         fs.existsSync (imageDir + atom.config.get("atom-pronama-chan.images." + item))
+        img = document.createElement('img')
+        img.src = @getImagePath("#{item}")
 
     atom.views.getView(atom.workspace).appendChild(@element)
 
