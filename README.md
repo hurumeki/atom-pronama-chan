@@ -2,7 +2,7 @@
 プロ生ちゃんを追加するAtomパッケージです。  
 Package for [Atom](https://atom.io/) to add Pronama-chan to your editor
 
-![A screenshot of package](./screenshots/pronama-chan.png)
+![A screenshot of package](https://raw.githubusercontent.com/hurumeki/atom-pronama-chan/master/screenshots/pronama-chan.png)
 
 ## 機能 Features
 * エディタ背景にキャラクター(壁紙)を表示します。  
