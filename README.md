@@ -13,20 +13,14 @@ Package for [Atom](https://atom.io/) to add Pronama-chan to your editor
   Time signal
 
 ## インストール方法 Installation
-1. [Atom](https://atom.io/)エディタをインストールしてください  
-  Install [Atom](https://atom.io/).
+* AtomのSettings > Installから、atom-pronama-chanを検索してinstallしてください。  
+Search for atom-pronama-chan in Atom settings view.
 
-2. このリポジトリをAtomのパッケージディレクトリにクローンしてください  
-  Clone this repository to atom package directory.
+* apmコマンドを使う場合  
+or using apm:  
 ```
-cd ~/.atom/packages/
-git clone https://github.com/hurumeki/atom-pronama-chan.git
-cd atom-pronama-chan
-npm install
+apm install atom-pronama-chan
 ```
-
-3. Atomの設定画面でatom-pronama-chanを有効化してください  
-  Activate atom-pronama-chan in Atom Settings view.
 
 ## 自作アセットの追加 Adding original assets
 `/assets`以下に、任意の名前のフォルダを作り、その中に以下の構造でファイルを配置します。  
@@ -74,34 +68,34 @@ Released under the [MIT](https://github.com/tcnksm/tool/blob/master/LICENCE) lic
 それぞれのリポジトリのREADME.mdを確認してください。
 
 #### [プロ生ちゃん（暮井 慧）](http://pronama.azurewebsites.net/pronama/)
-![プロ生ちゃん（暮井 慧）](./screenshots/pronama-chan.png)
+![プロ生ちゃん（暮井 慧）](https://raw.githubusercontent.com/hurumeki/atom-pronama-chan/master/screenshots/pronama-chan.png)
 © 2011-2015 プログラミング生放送  
 [リポジトリ](https://github.com/hurumeki/atom-pronama-chan-assets-pronama-chan)
 
 
 #### [美雲このは](https://www.conoha.jp/blog/conoha)
-![美雲このは](./screenshots/conoha.png)
+![美雲このは](https://raw.githubusercontent.com/hurumeki/atom-pronama-chan/master/screenshots/conoha.png)
 ©GMO Internet, Inc.  
 本作品以外での利用を禁止します。  
 [リポジトリ](https://github.com/hurumeki/atom-pronama-chan-assets-conoha)
 
 #### [美雲あんず](http://cloud.gmo.jp/anzu/)
-![美雲あんず](./screenshots/anzu.png)
+![美雲あんず](https://raw.githubusercontent.com/hurumeki/atom-pronama-chan/master/screenshots/anzu.png)
 ©GMO Internet, Inc.  
 本作品以外での利用を禁止します。  
 [リポジトリ](https://github.com/hurumeki/atom-pronama-chan-assets-anzu)
 
 #### [クラウディア・窓辺 (Claudia Madobe)](http://msdn.microsoft.com/ja-jp/hh508969)
-![クラウディア・窓辺 (Claudia Madobe)](./screenshots/claudia.png)
+![クラウディア・窓辺 (Claudia Madobe)](https://raw.githubusercontent.com/hurumeki/atom-pronama-chan/master/screenshots/claudia.png)
 © 2011 Microsoft Corporation All Rights Reserved.  
 [リポジトリ](https://github.com/hurumeki/atom-pronama-chan-assets-claudia)
 
 #### [東北ずん子](http://zunko.jp/)
-![東北ずん子](./screenshots/zunko.png)
+![東北ずん子](https://raw.githubusercontent.com/hurumeki/atom-pronama-chan/master/screenshots/zunko.png)
 © 2016 SSS LLC.  
 [リポジトリ](https://github.com/hurumeki/atom-pronama-chan-assets-zunko)
 
 #### [ハッカドール１号](http://hackadoll.com/)
-![ハッカドール１号](./screenshots/hackadoll1.png)  
+![ハッカドール１号](https://raw.githubusercontent.com/hurumeki/atom-pronama-chan/master/screenshots/hackadoll1.png)  
 © DeNA Co., Ltd.  
 [リポジトリ](https://github.com/hurumeki/atom-pronama-chan-assets-hackadoll1)

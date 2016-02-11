@@ -1,3 +1,12 @@
+## 1.0.0
+* Publish to APM
+
+## 0.1.5
+* Use node-cron for TimeSignal
+* Add preloading images
+* Change to play the sound only once when multiple windows are open
+* Move Assets to other repository
+
 ## 0.1.4
 * Add notification event
 * Add image size config
