@@ -1,14 +1,16 @@
 fs   = require "fs"
+Path = require "path"
 remote = require 'remote'
 browserWindow = remote.require 'browser-window'
 {CronJob} = require 'cron'
+ASSETS_MODULE_PREFIX_REGEXP = /^atom-pronama-chan-assets-/
 
 module.exports =
   config:
     themeDir:
       type: "string"
-      default: "pronama-chan"
-      description: "directory name in assetsDir"
+      default: "atom-pronama-chan-assets-pronama-chan"
+      description: "directory name in assetsDir or package name in package.json dependencies"
       order: 1
     assetsDir:
       type: "string"
@@ -77,8 +79,10 @@ module.exports =
   themes: []
 
   activate: (state) ->
+    pJson = JSON.parse(fs.readFileSync(Path.join(__dirname, '..', 'package.json')))
     @loadConfig atom.config.get("atom-pronama-chan.themeDir")
     @themes = fs.readdirSync @getAssetsDirPath()
+    @themes = @themes.concat(pkg for pkg in (key for key of pJson.dependencies) when ASSETS_MODULE_PREFIX_REGEXP.test(pkg))
     atom.commands.add 'atom-text-editor', "atom-pronama-chan:toggle", => @toggle()
     atom.commands.add 'atom-text-editor', "atom-pronama-chan:roundTheme", => @roundTheme()
     atom.views.getView(atom.workspace).classList.add("pronama-chan")
@@ -101,12 +105,16 @@ module.exports =
   serialize: ->
 
   loadConfig: (themeDir) ->
-    if fs.existsSync (@getAssetsDirPath() + @trailingslash(themeDir) + "config.json")
-      data = require("../assets/" + @trailingslash(themeDir) + "config.json")
+    if fs.existsSync(Path.join(__dirname, '..', 'node_modules', themeDir))
+      data = require(Path.join(themeDir))
+    else if fs.existsSync(Path.join(@getAssetsDirPath(), themeDir, 'config.json'))
+      data = require(Path.join(@getAssetsDirPath(), themeDir, 'config.json'))
+
+    if data?
       atom.config.setDefaults("atom-pronama-chan", data)
 
   init: ->
-    imageDir = @getThemeDirPath() + "image/"
+    imageDir = Path.join(@getThemeDirPath(), 'image', '/')
 
     @element = document.createElement('style')
     @element.textContent = " .pronama-chan .item-views /deep/ .editor--private:not(.mini) .scroll-view::after {
@@ -120,11 +128,11 @@ module.exports =
       }"
 
     ["wink", "blink", "happy", "sad", "surprise", "usual"].forEach (item, i) =>
-      @element.textContent += " .pronama-chan.pronama-#{item} .item-views /deep/ .editor--private:not(.mini) .scroll-view::after {
-        background-image: url(\"" + @getImageUrl(item) + "\");
-      }"
       if atom.config.get("atom-pronama-chan.images." + item) and
          fs.existsSync (imageDir + atom.config.get("atom-pronama-chan.images." + item))
+        @element.textContent += " .pronama-chan.pronama-#{item} .item-views /deep/ .editor--private:not(.mini) .scroll-view::after {
+          background-image: url(\"" + @getImageUrl(item) + "\");
+        }"
         img = document.createElement('img')
         img.src = @getImageUrl(item)
 
@@ -186,7 +194,8 @@ module.exports =
     return unless windows[0].id is atom.getCurrentWindow().id
     return unless atom.views.getView(atom.workspace).classList.contains("pronama-chan")
 
-    filepath = @getThemeDirPath() +  "voice/" + filename
+    filepath = Path.join(@getThemeDirPath(), 'voice', filename)
+    fileurl = @getThemeDirUrl() + 'voice/' + filename
 
     unless fs.existsSync filepath
       console.warn ("Pronama Chan: no voice file:" + filepath) if atom.inDevMode
@@ -195,7 +204,7 @@ module.exports =
     @audio = @audio or document.createElement("audio")
     @audio.autoplay = true
     @audio.volume = atom.config.get("atom-pronama-chan.voiceVolume")
-    @audio.src = filepath
+    @audio.src = fileurl
 
   changeFace: (notification) ->
     switch notification.type
@@ -221,10 +230,20 @@ module.exports =
     @getThemeDirUrl() + "image/" + atom.config.get("atom-pronama-chan.images." + type)
 
   getThemeDirUrl: ->
-    "atom://atom-pronama-chan/assets/" + @trailingslash(atom.config.get("atom-pronama-chan.themeDir"))
+    themeDir = atom.config.get('atom-pronama-chan.themeDir')
+    if ASSETS_MODULE_PREFIX_REGEXP.test(themeDir)
+      url = 'atom://atom-pronama-chan/node_modules/' + themeDir
+    else
+      url = 'atom://atom-pronama-chan/assets/' + themeDir
+
+    @trailingslash url
 
   getThemeDirPath: ->
-    @getAssetsDirPath() + @trailingslash(atom.config.get("atom-pronama-chan.themeDir"))
+    themeDir = atom.config.get("atom-pronama-chan.themeDir")
+    if ASSETS_MODULE_PREFIX_REGEXP.test(themeDir)
+      Path.join(__dirname, '..',  'node_modules', themeDir, '/')
+    else
+      Path.join(@getAssetsDirPath(), themeDir, '/')
 
   getAssetsDirPath: ->
     path =  atom.config.get("atom-pronama-chan.assetsDir")

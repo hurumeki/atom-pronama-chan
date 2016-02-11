@@ -21,10 +21,28 @@ Package for [Atom](https://atom.io/) to add Pronama-chan to your editor
 ```
 cd ~/.atom/packages/
 git clone https://github.com/hurumeki/atom-pronama-chan.git
+cd atom-pronama-chan
+npm install
 ```
 
 3. Atomの設定画面でatom-pronama-chanを有効化してください  
   Activate atom-pronama-chan in Atom Settings view.
+
+## 自作アセットの追加 Adding original assets
+`/assets`以下に、任意の名前のフォルダを作り、その中に以下の構造でファイルを配置します。  
+config.jsonで、画像・音声のファイル名と用途を対応付けてください。  
+[参考: プロ生ちゃんアセットのconfig.json](https://github.com/hurumeki/atom-pronama-chan-assets-pronama-chan/blob/master/config.json)  
+
+```
+/atom-pronama-chan
+- assets
+  - your_assets_name
+    - config.json
+    - image/
+    - voice/
+```
+
+Atomを再起動し、コマンド`Pronama Chan: RoundTheme`で切り替えるか、atom-pronama-chanのSettingsから`ThemeDir`の値を作成したフォルダ名にすると、反映されます。
 
 ## 使い方 Usage
 |Key|Events|Description|
@@ -52,38 +70,38 @@ Released under the [MIT](https://github.com/tcnksm/tool/blob/master/LICENCE) lic
 ### 画像、音声 Images and Voices
 原則として、本作品以外での利用を禁止します。  
 本作品以外で利用する場合は、個別に権利者に確認してください。  
+各キャラクターの画像、音声は別リポジトリにあります。  
+それぞれのリポジトリのREADME.mdを確認してください。
 
-####[プロ生ちゃん（暮井 慧）](http://pronama.azurewebsites.net/pronama/)
+#### [プロ生ちゃん（暮井 慧）](http://pronama.azurewebsites.net/pronama/)
 ![プロ生ちゃん（暮井 慧）](./screenshots/pronama-chan.png)
-© 2010-2014 プログラミング生放送  
-プロ生ちゃん（暮井 慧）の音声は、許諾を得て利用しています（許諾番号： 012）。  
-本作品以外での利用（音声の抽出、加工、公開などの行為）を禁止します。
+© 2011-2015 プログラミング生放送  
+[リポジトリ](https://github.com/hurumeki/atom-pronama-chan-assets-pronama-chan)
 
-画像 Images - [利用ガイドライン (Guideline)](http://pronama.azurewebsites.net/pronama/guideline/)  
-音声 Voices - [音声の利用ガイドライン (Guideline Voice)](http://pronama.azurewebsites.net/pronama/guideline/)
 
-####[美雲このは](https://www.conoha.jp/blog/conoha)
+#### [美雲このは](https://www.conoha.jp/blog/conoha)
 ![美雲このは](./screenshots/conoha.png)
 ©GMO Internet, Inc.  
 本作品以外での利用を禁止します。  
-[ガイドライン (Guideline)](https://www.conoha.jp/blog/conoha)
+[リポジトリ](https://github.com/hurumeki/atom-pronama-chan-assets-conoha)
 
-####[美雲あんず](http://cloud.gmo.jp/anzu/)
+#### [美雲あんず](http://cloud.gmo.jp/anzu/)
 ![美雲あんず](./screenshots/anzu.png)
-©GMO Internet, Inc. 2012  
+©GMO Internet, Inc.  
 本作品以外での利用を禁止します。  
-[ガイドライン (Guideline)](http://cloud.gmo.jp/anzu/)
+[リポジトリ](https://github.com/hurumeki/atom-pronama-chan-assets-anzu)
 
-####[クラウディア・窓辺 (Claudia Madobe)](http://msdn.microsoft.com/ja-jp/hh508969)
+#### [クラウディア・窓辺 (Claudia Madobe)](http://msdn.microsoft.com/ja-jp/hh508969)
 ![クラウディア・窓辺 (Claudia Madobe)](./screenshots/claudia.png)
 © 2011 Microsoft Corporation All Rights Reserved.  
-[ガイドライン (Guideline)](http://msdn.microsoft.com/ja-jp/claudia00_03)
+[リポジトリ](https://github.com/hurumeki/atom-pronama-chan-assets-claudia)
 
-####[東北ずん子](http://zunko.jp/)
+#### [東北ずん子](http://zunko.jp/)
 ![東北ずん子](./screenshots/zunko.png)
-© 2014 SSS LLC.  
-[ガイドライン (Guideline)](http://zunko.jp/guideline.html)
+© 2016 SSS LLC.  
+[リポジトリ](https://github.com/hurumeki/atom-pronama-chan-assets-zunko)
 
-####[ハッカドール１号](http://hackadoll.com/)
+#### [ハッカドール１号](http://hackadoll.com/)
 ![ハッカドール１号](./screenshots/hackadoll1.png)  
-© DeNA Co., Ltd.
+© DeNA Co., Ltd.  
+[リポジトリ](https://github.com/hurumeki/atom-pronama-chan-assets-hackadoll1)

@@ -55,8 +55,11 @@ describe "PronamaChan", ->
           expect(PronamaChan.audio.src).not.toEqual(orgSrc)
 
       it "speak method nothing to do when pronama-chan is hidden", ->
+        waitsFor ->
+          atom.commands.dispatch textEdiorView, 'atom-pronama-chan:toggle'
+
         runs ->
-          PronamaChan.speak atom.config.get("")
+          PronamaChan.speak atom.config.get("atom-pronama-chan.startVoice.morning")
           expect(PronamaChan.audio.src).toEqual(orgSrc)
 
       it "speak method fail file is not exists", ->

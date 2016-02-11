@@ -9,6 +9,12 @@
     "atom": ">0.50.0"
   },
   "dependencies": {
+    "atom-pronama-chan-assets-anzu": "github:hurumeki/atom-pronama-chan-assets-anzu",
+    "atom-pronama-chan-assets-claudia": "github:hurumeki/atom-pronama-chan-assets-claudia",
+    "atom-pronama-chan-assets-conoha": "github:hurumeki/atom-pronama-chan-assets-conoha",
+    "atom-pronama-chan-assets-hackadoll1": "github:hurumeki/atom-pronama-chan-assets-hackadoll1",
+    "atom-pronama-chan-assets-pronama-chan": "github:hurumeki/atom-pronama-chan-assets-pronama-chan",
+    "atom-pronama-chan-assets-zunko": "github:hurumeki/atom-pronama-chan-assets-zunko",
     "cron": "^1.1.0"
   }
 }
