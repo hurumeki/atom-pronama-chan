@@ -6,7 +6,7 @@ Package for [Atom](https://atom.io/) to add Pronama-chan to your editor
 
 ## 機能 Features
 * エディタ背景にキャラクター(壁紙)を表示します。  
-  Display Characto r(Wallpaper) in Editor pane
+  Display Character (Wallpaper) in Editor pane
 * エディタ起動時のボイス  
   Voice at editor starting
 * 時報  
