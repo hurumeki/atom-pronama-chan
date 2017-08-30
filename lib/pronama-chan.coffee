@@ -117,20 +117,20 @@ module.exports =
     imageDir = Path.join(@getThemeDirPath(), 'image', '/')
 
     @element = document.createElement('style')
-    @element.textContent = " .pronama-chan .item-views /deep/ .editor--private:not(.mini) .scroll-view::after {
+    @element.textContent = " .pronama-chan .editor .scroll-view::after {
       opacity: " + atom.config.get("atom-pronama-chan.imageOpacity").toString() + ";
       background-size: " + atom.config.get("atom-pronama-chan.imageSize") + ";
     }"
 
     if fs.existsSync (imageDir + atom.config.get("atom-pronama-chan.images.background"))
-      @element.textContent += " .pronama-chan .item-views /deep/ .editor--private:not(.mini) .scroll-view::after {
+      @element.textContent += " .pronama-chan .editor .scroll-view::after {
         background-image: url(\"" + @getImageUrl("background") + "\");
       }"
 
     ["wink", "blink", "happy", "sad", "surprise", "usual"].forEach (item, i) =>
       if atom.config.get("atom-pronama-chan.images." + item) and
          fs.existsSync (imageDir + atom.config.get("atom-pronama-chan.images." + item))
-        @element.textContent += " .pronama-chan.pronama-#{item} .item-views /deep/ .editor--private:not(.mini) .scroll-view::after {
+        @element.textContent += " .pronama-chan.pronama-#{item} .editor .scroll-view::after {
           background-image: url(\"" + @getImageUrl(item) + "\");
         }"
         img = document.createElement('img')
