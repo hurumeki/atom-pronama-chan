@@ -6,7 +6,7 @@
   "repository": "https://github.com/hurumeki/atom-pronama-chan",
   "license": "MIT",
   "engines": {
-    "atom": ">0.50.0"
+    "atom": ">=1.0.0 <2.0.0"
   },
   "dependencies": {
     "atom-pronama-chan-assets-anzu": "github:hurumeki/atom-pronama-chan-assets-anzu",
