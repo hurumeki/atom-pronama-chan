@@ -1,7 +1,7 @@
 fs   = require "fs"
 Path = require "path"
-remote = require 'remote'
-browserWindow = remote.require 'browser-window'
+remote = require("electron").remote
+browserWindow = remote.BrowserWindow
 {CronJob} = require 'cron'
 ASSETS_MODULE_PREFIX_REGEXP = /^atom-pronama-chan-assets-/
 
